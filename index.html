@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lily Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #6a4fff;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6a4fff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background-color: #5a3fd6;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .footer-links a {
+            color: #6a4fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>Welcome to Lily</h1>
+        <form id="login-form">
+            <input type="text" name="username" class="input-field" placeholder="Username" value="Abdulla" required>
+            <input type="password" name="password" class="input-field" placeholder="Password" value="1234@abdullah" required>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+        <div class="footer-links">
+            <a href="/forgot-password">Forgot Password?</a><br>
+            <a href="/signup">Sign Up</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('#login-form').onsubmit = function(event) {
+            event.preventDefault(); // Prevent form submission
+            let username = document.querySelector('input[name="username"]').value;
+            let password = document.querySelector('input[name="password"]').value;
+
+            // Check credentials
+            if (username === 'Abdulla' && password === '1234@abdullah') {
+                window.location.href = 'dashboard.html'; // Redirect to the dashboard page
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
