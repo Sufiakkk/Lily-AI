@@ -2,80 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lily Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Lily</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f9f6ff;
+      color: #333;
     }
 
-    .container {
-      background-color: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      width: 100%;
-      max-width: 400px;
+    header {
+      background-color: #6a4fff;
+      color: white;
+      padding: 20px;
       text-align: center;
     }
 
+    section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+      animation: fadeIn 1s ease-out;
+    }
+
     h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
       color: #6a4fff;
-      font-size: 2.2em;
-      margin-bottom: 20px;
     }
 
-    .input-field {
-      width: 100%;
-      padding: 12px;
+    .roadmap {
+      margin-top: 30px;
+    }
+
+    .roadmap ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .roadmap li {
       margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
+      padding: 10px;
+      background: #eee;
+      border-left: 4px solid #6a4fff;
     }
 
-    .login-button {
-      width: 100%;
-      padding: 12px;
-      background-color: #6a4fff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1.1em;
-      cursor: pointer;
-      margin-top: 10px;
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Login to Lily</h1>
-    <form id="login-form">
-      <input type="text" name="username" class="input-field" placeholder="Username" required />
-      <input type="password" name="password" class="input-field" placeholder="Password" required />
-      <button type="submit" class="login-button">Login</button>
-    </form>
-  </div>
 
-  <script>
-    document.querySelector("#login-form").onsubmit = function (event) {
-      event.preventDefault();
+  <header>
+    <h1>Meet Lily</h1>
+    <p>Your calm, smart, and helpful assistant</p>
+  </header>
 
-      const username = document.querySelector('input[name="username"]').value;
-      const password = document.querySelector('input[name="password"]').value;
+  <section>
+    <h2>What is Lily?</h2>
+    <p>Lily is a personalized AI assistant designed to help you stay organized, focused, and connected. Whether it’s managing your tasks, controlling your phone, or sharing a little joke — Lily is here for you.</p>
 
-      if (username === "Abdulla" && password === "1234@abdullah") {
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Incorrect username or password.");
-      }
-    };
-  </script>
+    <h2 class="roadmap-title">Our Roadmap</h2>
+    <div class="roadmap">
+      <ul>
+        <li><strong>Stage 1:</strong> Voice & Task Basics</li>
+        <li><strong>Stage 2:</strong> Smart Phone Controls & Wellness Tips</li>
+        <li><strong>Stage 3:</strong> Home Automation & Cloud Sync</li>
+        <li><strong>Stage 4:</strong> Full Personalization & Assistant AI</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    “Hey Lily, what can you do?” — “I’ll help you stay organized, focused, and in control.”
+  </footer>
+
 </body>
 </html>
