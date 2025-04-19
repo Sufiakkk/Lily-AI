@@ -2,108 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Lily</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lily - Welcome</title>
   <style>
     body {
-      margin: 0;
       font-family: "Segoe UI", sans-serif;
-      background: #f9f6ff;
-      color: #333;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
     }
 
-    header {
-      background-color: #6a4fff;
-      color: white;
+    .container {
+      background-color: white;
       padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
       text-align: center;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 900px;
+      position: relative;
     }
 
     h1 {
+      color: #6a4fff;
       font-size: 2.5em;
       margin-bottom: 20px;
     }
 
-    .roadmap-section {
-      margin-top: 50px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1.5s forwards 0.5s;
-    }
-
-    .roadmap-title {
-      font-size: 1.8em;
-      margin-bottom: 20px;
-      color: #6a4fff;
+    p {
+      color: #555;
+      font-size: 1.1em;
+      line-height: 1.5;
     }
 
     .roadmap {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    .roadmap-item {
-      margin: 20px 0;
-      padding: 15px;
-      background: #eee;
-      border-left: 5px solid #6a4fff;
-      border-radius: 8px;
+      margin-top: 30px;
+      text-align: left;
+      font-size: 1.1em;
+      color: #444;
       opacity: 0;
-      animation: slideIn 1s forwards;
+      animation: fadeIn 1s forwards;
     }
 
-    .roadmap-item:nth-child(1) {
-      animation-delay: 0.2s;
+    .roadmap h3 {
+      color: #6a4fff;
+      font-size: 1.5em;
+      margin-bottom: 10px;
     }
 
-    .roadmap-item:nth-child(2) {
-      animation-delay: 0.4s;
+    .roadmap ul {
+      list-style-type: none;
+      padding-left: 0;
     }
 
-    .roadmap-item:nth-child(3) {
-      animation-delay: 0.6s;
+    .roadmap li {
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      transition: background-color 0.3s ease;
     }
 
-    .roadmap-item:nth-child(4) {
-      animation-delay: 0.8s;
+    .roadmap li:hover {
+      background-color: #f4f4f9;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #888;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
+    /* 3-Dot Developer Icon */
     #dev-icon {
       position: fixed;
       top: 20px;
       right: 20px;
-      font-size: 24px;
+      font-size: 30px;
       cursor: pointer;
       color: #6a4fff;
       font-weight: bold;
       user-select: none;
     }
 
+    /* Developer Login Popup */
     #dev-login {
       display: none;
       position: fixed;
@@ -113,7 +91,7 @@
       border: 1px solid #ccc;
       padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       z-index: 1000;
     }
 
@@ -133,70 +111,73 @@
       cursor: pointer;
     }
 
+    /* Keyframe for Smooth Fade In */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Meet Lily</h1>
-    <p>Your calm, smart, and helpful assistant</p>
-  </header>
 
-  <section class="roadmap-section">
-    <h2 class="roadmap-title">Our Roadmap</h2>
+  <!-- Main Content Container -->
+  <div class="container">
+    <h1>Welcome to Lily!</h1>
+    <p>
+      Lily is your friendly assistant, built to help you manage tasks, notes, and much more. Explore the features and watch as Lily evolves into your perfect assistant.
+    </p>
+    
+    <!-- Roadmap Section -->
     <div class="roadmap">
-      <div class="roadmap-item">
-        <strong>Stage 1:</strong> Voice & Task Basics
-      </div>
-      <div class="roadmap-item">
-        <strong>Stage 2:</strong> Smart Phone Controls & Wellness Tips
-      </div>
-      <div class="roadmap-item">
-        <strong>Stage 3:</strong> Home Automation & Cloud Sync
-      </div>
-      <div class="roadmap-item">
-        <strong>Stage 4:</strong> Full Personalization & Assistant AI
-      </div>
+      <h3>Lily's Roadmap</h3>
+      <ul>
+        <li>Stage 1: User Interaction and Task Management</li>
+        <li>Stage 2: Personalization and AI Integration</li>
+        <li>Stage 3: Advanced Voice Assistant Capabilities</li>
+        <li>Stage 4: Full Assistant Integration Across Platforms</li>
+      </ul>
     </div>
-  </section>
+  </div>
 
-  <footer>
-    “Hey Lily, what can you do?” — “I’ll help you stay organized, focused, and in control.”
-  </footer>
+  <!-- Three-dot Developer Icon -->
+  <div id="dev-icon" title="Developer Login">&#8942;</div>
 
-  <!-- Dev Access Button -->
-  <div id="dev-icon" title="Developer Login">&#x22EE;</div>
-
-  <!-- Hidden Dev Login Form -->
+  <!-- Developer Login Form -->
   <div id="dev-login">
     <form id="dev-login-form">
-      <input type="text" placeholder="Username" name="username" required />
-      <input type="password" placeholder="Password" name="password" required />
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="password" name="password" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
   </div>
 
   <script>
+    // Developer Login Toggle
     document.getElementById("dev-icon").onclick = function () {
       const form = document.getElementById("dev-login");
       form.style.display = form.style.display === "block" ? "none" : "block";
     };
 
+    // Close the developer login popup if clicked outside
     document.addEventListener("click", function (event) {
-      if (!document.getElementById("dev-login").contains(event.target) && event.target !== document.getElementById("dev-icon")) {
-        document.getElementById("dev-login").style.display = "none";
+      const devLogin = document.getElementById("dev-login");
+      if (!devLogin.contains(event.target) && event.target !== document.getElementById("dev-icon")) {
+        devLogin.style.display = "none";
       }
     });
 
+    // Handle Developer Login
     document.getElementById("dev-login-form").onsubmit = function (e) {
       e.preventDefault();
-      const user = this.username.value;
-      const pass = this.password.value;
-      if (user === "Abdullah" && pass === "1234@abdullah") {
+      const username = this.username.value;
+      const password = this.password.value;
+      if (username === "Abdullah" && password === "1234@abdullah") {
         window.location.href = "dashboard.html";
       } else {
         alert("Incorrect developer credentials.");
       }
     };
   </script>
+
 </body>
 </html>
