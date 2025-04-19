@@ -15,7 +15,7 @@
 }
 
 #dev-login {
-  display: none;
+  display: block;
   position: fixed;
   top: 60px;
   right: 20px;
@@ -148,10 +148,8 @@
     const user = this.username.value;
     const pass = this.password.value;
     if (user === "Abdulla" && pass === "1234@abdullah") {
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Incorrect developer credentials.");
-    }
+  alert("Login successful!"); // Temporary success message
+}
   };
 </script>
 </body>
