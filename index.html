@@ -2,139 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meet Lily</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Lily</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: "Segoe UI", sans-serif;
       background: #f9f6ff;
       color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    /* Header */
     header {
       background-color: #6a4fff;
       color: white;
-      padding: 30px 20px;
+      padding: 40px;
       text-align: center;
-      position: relative;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 900px;
     }
 
-    header h1 {
-      font-size: 3em;
-      margin: 0;
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
     }
 
-    header p {
-      font-size: 1.1em;
-      margin-top: 10px;
-      font-weight: 300;
+    .roadmap-section {
+      margin-top: 50px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1.5s forwards 0.5s;
     }
 
-    /* Dev Icon */
+    .roadmap-title {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #6a4fff;
+    }
+
+    .roadmap {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .roadmap-item {
+      margin: 20px 0;
+      padding: 15px;
+      background: #eee;
+      border-left: 5px solid #6a4fff;
+      border-radius: 8px;
+      opacity: 0;
+      animation: slideIn 1s forwards;
+    }
+
+    .roadmap-item:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    .roadmap-item:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+
+    .roadmap-item:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    .roadmap-item:nth-child(4) {
+      animation-delay: 0.8s;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
     #dev-icon {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 20px;
       font-size: 24px;
       cursor: pointer;
-      color: white;
-    }
-
-    /* About Section */
-    section.about {
-      padding: 40px 20px;
-      background-color: #fff;
-      text-align: center;
-      max-width: 800px;
-      margin: 40px auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    section.about h2 {
       color: #6a4fff;
-      font-size: 2.2em;
+      font-weight: bold;
+      user-select: none;
     }
 
-    section.about p {
-      font-size: 1.2em;
-      line-height: 1.5;
-      margin-top: 20px;
-      color: #555;
-    }
-
-    /* Features Section */
-    section.features {
-      padding: 40px 20px;
-      background-color: #f4f4f9;
-      text-align: center;
-    }
-
-    section.features h2 {
-      color: #6a4fff;
-      font-size: 2.5em;
-      margin-bottom: 20px;
-    }
-
-    section.features .feature {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 20px;
-    }
-
-    section.features .feature div {
-      max-width: 200px;
-    }
-
-    section.features .feature div i {
-      font-size: 3em;
-      color: #6a4fff;
-      margin-bottom: 15px;
-    }
-
-    /* Roadmap Section */
-    section.roadmap {
-      padding: 40px 20px;
-      background-color: #fff;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    section.roadmap h2 {
-      color: #6a4fff;
-      font-size: 2.5em;
-    }
-
-    section.roadmap ul {
-      list-style-type: none;
-      padding: 0;
-      margin-top: 20px;
-    }
-
-    section.roadmap li {
-      font-size: 1.1em;
-      background: #eee;
-      padding: 15px;
-      margin: 10px 0;
-      border-left: 5px solid #6a4fff;
-    }
-
-    footer {
-      background-color: #6a4fff;
-      padding: 20px;
-      text-align: center;
-      color: white;
-    }
-
-    footer p {
-      font-size: 1.1em;
-      margin: 0;
-    }
-
-    /* Dev Login Modal */
     #dev-login {
       display: none;
       position: fixed;
@@ -144,7 +113,8 @@
       border: 1px solid #ccc;
       padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
     }
 
     #dev-login input {
@@ -162,58 +132,41 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
   </style>
 </head>
 <body>
-
   <header>
     <h1>Meet Lily</h1>
-    <p>Your personal assistant that helps you stay organized, focused, and in control.</p>
-    <!-- Developer Icon for Login -->
-    <div id="dev-icon" title="Developer Login">&#8942;</div>
+    <p>Your calm, smart, and helpful assistant</p>
   </header>
 
-  <section class="about">
-    <h2>What is Lily?</h2>
-    <p>Lily is an intelligent, personalized assistant designed to streamline your day-to-day activities. Whether it’s managing tasks, offering wellness tips, controlling your device, or simply engaging in fun interactions, Lily has you covered.</p>
-  </section>
-
-  <section class="features">
-    <h2>Key Features of Lily</h2>
-    <div class="feature">
-      <div>
-        <i class="fas fa-calendar-check"></i>
-        <h3>Task Management</h3>
-        <p>Stay organized with Lily's task manager. Create, update, and track your tasks with ease.</p>
+  <section class="roadmap-section">
+    <h2 class="roadmap-title">Our Roadmap</h2>
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <strong>Stage 1:</strong> Voice & Task Basics
       </div>
-      <div>
-        <i class="fas fa-headphones"></i>
-        <h3>Wellness Tips</h3>
-        <p>Lily provides daily wellness tips and reminders to help you maintain a balanced lifestyle.</p>
+      <div class="roadmap-item">
+        <strong>Stage 2:</strong> Smart Phone Controls & Wellness Tips
       </div>
-      <div>
-        <i class="fas fa-microphone"></i>
-        <h3>Voice Commands</h3>
-        <p>Control your phone and manage tasks with simple voice commands, making life easier and hands-free.</p>
+      <div class="roadmap-item">
+        <strong>Stage 3:</strong> Home Automation & Cloud Sync
+      </div>
+      <div class="roadmap-item">
+        <strong>Stage 4:</strong> Full Personalization & Assistant AI
       </div>
     </div>
   </section>
 
-  <section class="roadmap">
-    <h2>Our Roadmap</h2>
-    <ul>
-      <li><strong>Stage 1:</strong> Voice & Task Management</li>
-      <li><strong>Stage 2:</strong> Smart Phone Controls & Wellness Integration</li>
-      <li><strong>Stage 3:</strong> Home Automation & Cloud Sync</li>
-      <li><strong>Stage 4:</strong> Full Personalization & AI</li>
-    </ul>
-  </section>
-
   <footer>
-    <p>"Hey Lily, what can you do?" - "I’ll help you stay organized, focused, and in control."</p>
+    “Hey Lily, what can you do?” — “I’ll help you stay organized, focused, and in control.”
   </footer>
 
-  <!-- Hidden Dev Login -->
+  <!-- Dev Access Button -->
+  <div id="dev-icon" title="Developer Login">&#x22EE;</div>
+
+  <!-- Hidden Dev Login Form -->
   <div id="dev-login">
     <form id="dev-login-form">
       <input type="text" placeholder="Username" name="username" required />
@@ -222,20 +175,15 @@
     </form>
   </div>
 
-  <!-- Add FontAwesome for Icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
   <script>
-    const devIcon = document.getElementById("dev-icon");
-    const devLogin = document.getElementById("dev-login");
-
-    devIcon.onclick = function () {
-      devLogin.style.display = devLogin.style.display === "block" ? "none" : "block";
+    document.getElementById("dev-icon").onclick = function () {
+      const form = document.getElementById("dev-login");
+      form.style.display = form.style.display === "block" ? "none" : "block";
     };
 
     document.addEventListener("click", function (event) {
-      if (!devLogin.contains(event.target) && event.target !== devIcon) {
-        devLogin.style.display = "none";
+      if (!document.getElementById("dev-login").contains(event.target) && event.target !== document.getElementById("dev-icon")) {
+        document.getElementById("dev-login").style.display = "none";
       }
     });
 
@@ -251,4 +199,4 @@
     };
   </script>
 </body>
-    </html>
+</html>
