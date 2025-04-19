@@ -5,6 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Lily</title>
   <style>
+    #dev-icon {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6a4fff;
+}
+
+#dev-login {
+  display: none;
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+#dev-login input {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+  width: 200px;
+}
+
+#dev-login button {
+  background: #6a4fff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
     body {
       margin: 0;
       font-family: "Segoe UI", sans-serif;
@@ -89,6 +125,34 @@
   <footer>
     “Hey Lily, what can you do?” — “I’ll help you stay organized, focused, and in control.”
   </footer>
+<!-- Dev Access Button -->
+<div id="dev-icon" title="Developer Login">&#x22EE;</div>
 
+<!-- Hidden Dev Login Form -->
+<div id="dev-login">
+  <form id="dev-login-form">
+    <input type="text" placeholder="Username" name="username" required />
+    <input type="password" placeholder="Password" name="password" required />
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById("dev-icon").onclick = function () {
+    const form = document.getElementById("dev-login");
+    form.style.display = form.style.display === "block" ? "none" : "block";
+  };
+
+  document.getElementById("dev-login-form").onsubmit = function (e) {
+    e.preventDefault();
+    const user = this.username.value;
+    const pass = this.password.value;
+    if (user === "Abdulla" && pass === "1234@abdullah") {
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Incorrect developer credentials.");
+    }
+  };
+</script>
 </body>
 </html>
