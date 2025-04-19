@@ -5,148 +5,261 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lily Dashboard</title>
   <style>
+    :root {
+      --primary: #6a4fff;
+      --bg: #f4f4f9;
+      --text: #333;
+      --light: #fff;
+      --card: #ffffff;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --text: #eee;
+      --light: #1e1e1e;
+      --card: #1f1f2f;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
     }
 
     header {
-      background-color: #6a4fff;
+      background: var(--primary);
       color: white;
       padding: 20px;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+
+    .settings {
+      cursor: pointer;
+      font-size: 1.2em;
     }
 
     .container {
-      padding: 30px;
-      max-width: 960px;
-      margin: auto;
-    }
-
-    .datetime {
-      text-align: center;
-      margin-top: 10px;
-      color: #e0dfff;
-      font-size: 0.95em;
-    }
-
-    h2 {
-      color: #6a4fff;
-      margin-top: 40px;
-    }
-
-    .section {
-      background: white;
       padding: 20px;
-      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
 
-    ul {
-      padding-left: 20px;
+    .card h2 {
+      margin-top: 0;
+      color: var(--primary);
     }
 
-    .status-item {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
+    #chat-box {
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 10px;
     }
 
-    .logout-btn {
-      margin-top: 40px;
-      padding: 12px 20px;
-      background-color: #6a4fff;
-      color: white;
-      border: none;
+    .message {
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .user {
+      background: #dcdcff;
+      align-self: flex-end;
+    }
+
+    .lily {
+      background: #eee;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1em;
+    }
+
+    button {
+      margin-top: 10px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
       cursor: pointer;
-      display: block;
-      width: 100%;
-      max-width: 200px;
-      margin-left: auto;
-      margin-right: auto;
-      transition: background-color 0.3s ease;
+      font-size: 1em;
     }
 
-    .logout-btn:hover {
-      background-color: #5840e0;
+    .toggle-dark {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 15px;
-      }
+    .logout {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: var(--light);
+      border: 1px solid #ccc;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+      z-index: 1000;
+    }
 
-      .logout-btn {
-        width: 100%;
-      }
+    .logout button {
+      background: #f44336;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Hello, Abdullah!</h1>
-    <p>Welcome back to your smart assistant</p>
-    <div class="datetime" id="datetime">Loading time...</div>
+    <h1>Lily Dashboard</h1>
+    <div class="settings" onclick="toggleLogout()">⚙️</div>
   </header>
 
-  <div class="container">
+  <!-- Logout Menu -->
+  <div class="logout" id="logout-menu">
+    <button onclick="logout()">Logout</button>
+  </div>
 
-    <div class="section">
-      <h2>Today's Smart Tasks</h2>
+  <div class="container">
+    <!-- Chat Assistant -->
+    <div class="card">
+      <h2>Chat with Lily</h2>
+      <div id="chat-box"></div>
+      <input type="text" id="chat-input" placeholder="Say something..." />
+      <button onclick="sendChat()">Send</button>
+    </div>
+
+    <!-- Personalization -->
+    <div class="card">
+      <h2>Personalization</h2>
+      <label>Assistant Name</label>
+      <input type="text" placeholder="e.g. Lily" />
+      <label>Theme Color</label>
+      <input type="color" value="#6a4fff" />
+      <button>Save Settings</button>
+    </div>
+
+    <!-- Task Manager -->
+    <div class="card">
+      <h2>Tasks</h2>
+      <input type="text" id="task-input" placeholder="New task..." />
+      <button onclick="addTask()">Add</button>
+      <ul id="task-list"></ul>
+    </div>
+
+    <!-- Notes / Reminders -->
+    <div class="card">
+      <h2>Notes & Reminders</h2>
+      <textarea rows="6" placeholder="Write notes here..."></textarea>
+      <button>Save Note</button>
+    </div>
+
+    <!-- Lily Updates -->
+    <div class="card">
+      <h2>Lily Updates</h2>
       <ul>
-        <li>Drink water reminder every 1 hour</li>
-        <li>Wi-Fi auto turn-on at 8:00 AM</li>
-        <li>Silent mode at bedtime (10 PM – 6 AM)</li>
-        <li>Night mode brightness adjustment</li>
-        <li>Daily tip: “Stay positive, stay focused.”</li>
+        <li>Version 1.0 Released!</li>
+        <li>Voice assistant UI in progress</li>
+        <li>Sync feature coming soon</li>
       </ul>
     </div>
 
-    <div class="section">
-      <h2>System Status</h2>
-      <div class="status-item">
-        <span>Wi-Fi:</span>
-        <span>Connected</span>
-      </div>
-      <div class="status-item">
-        <span>Battery:</span>
-        <span>87%</span>
-      </div>
-      <div class="status-item">
-        <span>Volume:</span>
-        <span>50%</span>
-      </div>
-      <div class="status-item">
-        <span>Dark Mode:</span>
-        <span>Off</span>
-      </div>
+    <!-- Voice Assistant -->
+    <div class="card">
+      <h2>Voice Assistant</h2>
+      <p>This is a visual mock. Future versions will support mic input.</p>
+      <button onclick="simulateVoice()">Tap to Speak</button>
     </div>
-
-    <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
+  <!-- Dark Mode -->
+  <button class="toggle-dark" onclick="toggleDark()">Dark Mode</button>
+
   <script>
+    // Logout toggle
+    function toggleLogout() {
+      const menu = document.getElementById('logout-menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
     function logout() {
+      alert("Logged out!");
       window.location.href = "index.html";
     }
 
-    function updateDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const time = now.toLocaleTimeString();
-      const date = now.toLocaleDateString(undefined, options);
-      document.getElementById('datetime').textContent = `${date} — ${time}`;
+    // Chat interaction
+    function sendChat() {
+      const input = document.getElementById("chat-input");
+      const box = document.getElementById("chat-box");
+      const msg = input.value.trim();
+      if (msg === "") return;
+
+      const userMsg = `<div class="message user">${msg}</div>`;
+      const lilyReply = `<div class="message lily">Lily: ${generateReply(msg)}</div>`;
+      box.innerHTML += userMsg + lilyReply;
+      input.value = "";
+      box.scrollTop = box.scrollHeight;
     }
 
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-  </script>
+    function generateReply(msg) {
+      const lower = msg.toLowerCase();
+      if (lower.includes("hi") || lower.includes("hello")) return "Hi there! How can I help you?";
+      if (lower.includes("time")) return "It's always Lily time!";
+      if (lower.includes("joke")) return "Why did the AI go to school? To improve its 'algorhythm'!";
+      return "I'm listening...";
+    }
 
+    // Task manager
+    function addTask() {
+      const taskInput = document.getElementById("task-input");
+      const taskList = document.getElementById("task-list");
+      const task = taskInput.value.trim();
+      if (task === "") return;
+      const li = document.createElement("li");
+      li.textContent = task;
+      li.onclick = () => li.remove();
+      taskList.appendChild(li);
+      taskInput.value = "";
+    }
+
+    // Dark mode
+    function toggleDark() {
+      document.body.classList.toggle("dark");
+    }
+
+    // Simulate voice
+    function simulateVoice() {
+      alert("Voice assistant coming soon!");
+    }
+  </script>
 </body>
-</html>
+  </html>
