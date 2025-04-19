@@ -3,69 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lily Login</title>
+  <title>Welcome to Lily</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #f9f6ff, #e6e0ff);
+      color: #333;
       margin: 0;
-      position: relative;
+      padding: 0;
     }
 
-    .container {
-      background-color: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    h1 {
-      color: #6a4fff;
-      font-size: 2.2em;
-      margin-bottom: 20px;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-    }
-
-    .login-button {
-      width: 100%;
-      padding: 12px;
-      background-color: #6a4fff;
+    header {
+      background: linear-gradient(to right, #6a4fff, #947dff);
       color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1.1em;
-      cursor: pointer;
-      margin-top: 10px;
+      padding: 60px 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* Dev Icon - 3 vertical dots */
+    header h1 {
+      margin: 0;
+      font-size: 3em;
+    }
+
+    header p {
+      font-size: 1.3em;
+      margin-top: 15px;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 50px 20px;
+    }
+
+    h2 {
+      color: #6a4fff;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.8;
+    }
+
+    .features, .roadmap {
+      margin-top: 30px;
+    }
+
+    .feature-box {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin: 15px 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      border-left: 6px solid #6a4fff;
+    }
+
+    .roadmap ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .roadmap li {
+      margin: 10px 0;
+      padding: 18px;
+      background: #f3f0ff;
+      border-left: 4px solid #6a4fff;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.95em;
+      color: #777;
+      background-color: #f0f0f0;
+    }
+
     #dev-icon {
       position: fixed;
       top: 20px;
       right: 20px;
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
       color: #6a4fff;
       font-weight: bold;
       user-select: none;
+      z-index: 1001;
     }
 
-    /* Dev Login Popup */
     #dev-login {
       display: none;
       position: fixed;
@@ -73,45 +101,60 @@
       right: 20px;
       background: white;
       border: 1px solid #ccc;
-      padding: 15px;
+      padding: 18px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1002;
     }
 
     #dev-login input {
       display: block;
       margin: 10px 0;
-      padding: 8px;
-      width: 200px;
+      padding: 10px;
+      width: 220px;
+      font-size: 1em;
     }
 
     #dev-login button {
       background: #6a4fff;
       color: white;
       border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
+      padding: 10px 15px;
+      border-radius: 6px;
       cursor: pointer;
+    }
+
+    .animation-section {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .typewriter {
+      display: inline-block;
+      font-size: 1.5em;
+      color: #6a4fff;
+      border-right: 2px solid;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(30, end) forwards, blink 0.8s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: #6a4fff; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Three-dot Dev Icon -->
   <div id="dev-icon" title="Developer Login">&#8942;</div>
 
-  <!-- Main Login Container -->
-  <div class="container">
-    <h1>Login to Lily</h1>
-    <form id="login-form">
-      <input type="text" name="username" class="input-field" placeholder="Username" required />
-      <input type="password" name="password" class="input-field" placeholder="Password" required />
-      <button type="submit" class="login-button">Login</button>
-    </form>
-  </div>
-
-  <!-- Hidden Dev Login -->
   <div id="dev-login">
     <form id="dev-login-form">
       <input type="text" placeholder="Username" name="username" required />
@@ -120,27 +163,66 @@
     </form>
   </div>
 
+  <header>
+    <h1>Welcome to Lily</h1>
+    <p>Your Calm, Smart, and Helpful Assistant</p>
+  </header>
+
+  <section>
+    <h2>What is Lily?</h2>
+    <p>Lily is your personal AI assistant that blends simplicity and intelligence. Whether you're managing tasks, adjusting your phone settings, or simply looking for a laugh or wellness tip — Lily is here to assist.</p>
+
+    <div class="features">
+      <h2>Key Features</h2>
+      <div class="feature-box">
+        <strong>Voice Assistant</strong> — Speak naturally, get things done.
+      </div>
+      <div class="feature-box">
+        <strong>Task Manager</strong> — Reminders, to-dos, and notifications.
+      </div>
+      <div class="feature-box">
+        <strong>Phone Controls</strong> — Wi-Fi, volume, camera, and more.
+      </div>
+      <div class="feature-box">
+        <strong>Daily Tips</strong> — Motivation, wellness, and mental care.
+      </div>
+    </div>
+
+    <div class="roadmap">
+      <h2>Our Roadmap</h2>
+      <ul>
+        <li><strong>Stage 1:</strong> Core voice features and task management</li>
+        <li><strong>Stage 2:</strong> Enhanced phone integration & UI</li>
+        <li><strong>Stage 3:</strong> Smart home support & cloud sync</li>
+        <li><strong>Stage 4:</strong> AI personalization & assistant evolution</li>
+      </ul>
+    </div>
+
+    <div class="animation-section">
+      <h2>Preview What Lily Can Say:</h2>
+      <div class="typewriter">"Hey Lily, turn off Wi-Fi and tell me a joke!"</div>
+    </div>
+  </section>
+
+  <footer>
+    “Hey Lily, what can you do?” — “I’ll help you stay organized, focused, and in control.”<br>
+    &copy; 2025 Lily AI. Built with love.
+  </footer>
+
   <script>
-    // User login
-    document.querySelector("#login-form").onsubmit = function (event) {
-      event.preventDefault();
-      const username = document.querySelector('input[name="username"]').value;
-      const password = document.querySelector('input[name="password"]').value;
+    const devIcon = document.getElementById("dev-icon");
+    const devLogin = document.getElementById("dev-login");
 
-      if (username === "Abdullah" && password === "1234@abdullah") {
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Incorrect username or password.");
+    devIcon.onclick = function () {
+      devLogin.style.display = devLogin.style.display === "block" ? "none" : "block";
+    };
+
+    document.addEventListener("click", function (event) {
+      if (!devLogin.contains(event.target) && event.target !== devIcon) {
+        devLogin.style.display = "none";
       }
-    };
+    });
 
-    // Dev login toggle
-    document.getElementById("dev-icon").onclick = function () {
-      const form = document.getElementById("dev-login");
-      form.style.display = form.style.display === "block" ? "none" : "block";
-    };
-
-    // Dev login form
     document.getElementById("dev-login-form").onsubmit = function (e) {
       e.preventDefault();
       const user = this.username.value;
