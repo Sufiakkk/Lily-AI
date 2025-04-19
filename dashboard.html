@@ -2,264 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lily Dashboard</title>
   <style>
-    :root {
-      --primary: #6a4fff;
-      --bg: #f4f4f9;
-      --text: #333;
-      --light: #fff;
-      --card: #ffffff;
-    }
-
-    body.dark {
-      --bg: #121212;
-      --text: #eee;
-      --light: #1e1e1e;
-      --card: #1f1f2f;
-    }
-
     body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f4f9;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      transition: background 0.3s, color 0.3s;
-    }
-
-    header {
-      background: var(--primary);
-      color: white;
-      padding: 20px;
+      padding: 0;
       display: flex;
-      justify-content: space-between;
+      height: 100vh;
+      justify-content: center;
       align-items: center;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8em;
+    .dashboard-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      max-width: 1100px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    .settings {
-      cursor: pointer;
-      font-size: 1.2em;
-    }
-
-    .container {
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background-color: #6a4fff;
       padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .card {
-      background: var(--card);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    .sidebar h2 {
+      font-size: 1.6em;
+      margin-bottom: 20px;
     }
 
-    .card h2 {
-      margin-top: 0;
-      color: var(--primary);
-    }
-
-    #chat-box {
-      max-height: 250px;
-      overflow-y: auto;
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
       margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
     }
 
-    .message {
-      margin: 5px 0;
-      padding: 8px;
-      border-radius: 6px;
+    .sidebar a:hover {
+      background-color: #4e3fbf;
     }
 
-    .user {
-      background: #dcdcff;
+    .sidebar .settings-button {
+      margin-top: auto;
+      background-color: #ff4d4f;
+      border: none;
+      padding: 12px 15px;
+      color: white;
+      font-size: 1.1em;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar .settings-button:hover {
+      background-color: #e63946;
+    }
+
+    /* Main Chat Area */
+    .main-chat {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: scroll;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-bubble {
+      max-width: 70%;
+      margin: 10px;
+      padding: 12px;
+      border-radius: 15px;
+      background-color: #6a4fff;
+      color: white;
+      align-self: flex-start;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    .chat-bubble.user {
+      background-color: #ccc;
+      color: #333;
       align-self: flex-end;
     }
 
-    .lily {
-      background: #eee;
+    .input-area {
+      display: flex;
+      padding: 15px;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
     }
 
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-    }
-
-    button {
-      margin-top: 10px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-
-    .toggle-dark {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    .logout {
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background: var(--light);
-      border: 1px solid #ccc;
+    .input-area input {
+      flex-grow: 1;
       padding: 12px;
       border-radius: 8px;
-      display: none;
-      z-index: 1000;
+      border: 1px solid #ddd;
+      font-size: 1em;
+      margin-right: 10px;
     }
 
-    .logout button {
-      background: #f44336;
+    .input-area button {
+      background-color: #6a4fff;
+      color: white;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+    }
+
+    .input-area button:hover {
+      background-color: #4e3fbf;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Lily Dashboard</h1>
-    <div class="settings" onclick="toggleLogout()">⚙️</div>
-  </header>
-
-  <!-- Logout Menu -->
-  <div class="logout" id="logout-menu">
-    <button onclick="logout()">Logout</button>
-  </div>
-
-  <div class="container">
-    <!-- Chat Assistant -->
-    <div class="card">
-      <h2>Chat with Lily</h2>
-      <div id="chat-box"></div>
-      <input type="text" id="chat-input" placeholder="Say something..." />
-      <button onclick="sendChat()">Send</button>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Lily Dashboard</h2>
+      <div>
+        <a href="#">Dashboard Home</a>
+        <a href="#">Tasks</a>
+        <a href="#">Notes</a>
+        <a href="#">Settings</a>
+      </div>
+      <button class="settings-button" onclick="logout()">Logout</button>
     </div>
 
-    <!-- Personalization -->
-    <div class="card">
-      <h2>Personalization</h2>
-      <label>Assistant Name</label>
-      <input type="text" placeholder="e.g. Lily" />
-      <label>Theme Color</label>
-      <input type="color" value="#6a4fff" />
-      <button>Save Settings</button>
+    <!-- Main Chat Area -->
+    <div class="main-chat" id="chat-area">
+      <div class="chat-bubble">Hi there! How can I assist you today?</div>
+      <div class="chat-bubble user">I need some help with my tasks.</div>
+      <div class="chat-bubble">Sure! Let me know what you need help with.</div>
     </div>
 
-    <!-- Task Manager -->
-    <div class="card">
-      <h2>Tasks</h2>
-      <input type="text" id="task-input" placeholder="New task..." />
-      <button onclick="addTask()">Add</button>
-      <ul id="task-list"></ul>
-    </div>
-
-    <!-- Notes / Reminders -->
-    <div class="card">
-      <h2>Notes & Reminders</h2>
-      <textarea rows="6" placeholder="Write notes here..."></textarea>
-      <button>Save Note</button>
-    </div>
-
-    <!-- Lily Updates -->
-    <div class="card">
-      <h2>Lily Updates</h2>
-      <ul>
-        <li>Version 1.0 Released!</li>
-        <li>Voice assistant UI in progress</li>
-        <li>Sync feature coming soon</li>
-      </ul>
-    </div>
-
-    <!-- Voice Assistant -->
-    <div class="card">
-      <h2>Voice Assistant</h2>
-      <p>This is a visual mock. Future versions will support mic input.</p>
-      <button onclick="simulateVoice()">Tap to Speak</button>
+    <!-- Chat Input Area -->
+    <div class="input-area">
+      <input type="text" id="chat-input" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
     </div>
   </div>
-
-  <!-- Dark Mode -->
-  <button class="toggle-dark" onclick="toggleDark()">Dark Mode</button>
 
   <script>
-    // Logout toggle
-    function toggleLogout() {
-      const menu = document.getElementById('logout-menu');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    // Handle sending messages
+    function sendMessage() {
+      const chatInput = document.getElementById('chat-input');
+      const chatArea = document.getElementById('chat-area');
+      const userMessage = chatInput.value.trim();
+
+      if (userMessage) {
+        const userBubble = document.createElement('div');
+        userBubble.classList.add('chat-bubble', 'user');
+        userBubble.textContent = userMessage;
+        chatArea.appendChild(userBubble);
+
+        // Add reply after a short delay
+        setTimeout(() => {
+          const replyBubble = document.createElement('div');
+          replyBubble.classList.add('chat-bubble');
+          replyBubble.textContent = "I’m here to help! What’s next?";
+          chatArea.appendChild(replyBubble);
+          chatArea.scrollTop = chatArea.scrollHeight; // Auto-scroll to the latest message
+        }, 1000);
+      }
+
+      chatInput.value = ''; // Clear input field
+      chatArea.scrollTop = chatArea.scrollHeight; // Scroll to latest message
     }
 
+    // Logout Function
     function logout() {
-      alert("Logged out!");
+      alert("You have logged out.");
       window.location.href = "index.html";
     }
-
-    // Chat interaction
-    function sendChat() {
-      const input = document.getElementById("chat-input");
-      const box = document.getElementById("chat-box");
-      const msg = input.value.trim();
-      if (msg === "") return;
-
-      const userMsg = `<div class="message user">${msg}</div>`;
-      const lilyReply = `<div class="message lily">Lily: ${generateReply(msg)}</div>`;
-      box.innerHTML += userMsg + lilyReply;
-      input.value = "";
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function generateReply(msg) {
-      const lower = msg.toLowerCase();
-      if (lower.includes("hi") || lower.includes("hello")) return "Hi there! How can I help you?";
-      if (lower.includes("time")) return "It's always Lily time!";
-      if (lower.includes("joke")) return "Why did the AI go to school? To improve its 'algorhythm'!";
-      return "I'm listening...";
-    }
-
-    // Task manager
-    function addTask() {
-      const taskInput = document.getElementById("task-input");
-      const taskList = document.getElementById("task-list");
-      const task = taskInput.value.trim();
-      if (task === "") return;
-      const li = document.createElement("li");
-      li.textContent = task;
-      li.onclick = () => li.remove();
-      taskList.appendChild(li);
-      taskInput.value = "";
-    }
-
-    // Dark mode
-    function toggleDark() {
-      document.body.classList.toggle("dark");
-    }
-
-    // Simulate voice
-    function simulateVoice() {
-      alert("Voice assistant coming soon!");
-    }
   </script>
+
 </body>
-  </html>
+</html>
