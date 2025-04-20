@@ -2,204 +2,226 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lily Dashboard</title>
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
-      background-color: #f4f4f9;
       margin: 0;
-      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f4f9;
+      color: #333;
       display: flex;
+      flex-direction: column;
       height: 100vh;
-      justify-content: center;
+    }
+    header {
+      background: #6a4fff;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
     }
-
-    .dashboard-container {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      max-width: 1100px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    header h1 {
+      margin: 0;
+      font-size: 1.5em;
     }
-
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      background-color: #6a4fff;
-      padding: 20px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .sidebar h2 {
-      font-size: 1.6em;
-      margin-bottom: 20px;
-    }
-
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.1em;
-      margin-bottom: 10px;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-    }
-
-    .sidebar a:hover {
-      background-color: #4e3fbf;
-    }
-
-    .sidebar .settings-button {
-      margin-top: auto;
-      background-color: #ff4d4f;
+    .settings-btn {
+      background: none;
       border: none;
-      padding: 12px 15px;
       color: white;
-      font-size: 1.1em;
+      font-size: 1.2em;
       cursor: pointer;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
     }
-
-    .sidebar .settings-button:hover {
-      background-color: #e63946;
+    .dashboard {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 10px;
+      overflow: hidden;
     }
-
-    /* Main Chat Area */
-    .main-chat {
-      flex-grow: 1;
-      padding: 20px;
-      overflow-y: scroll;
-      background-color: #f9f9f9;
+    .sidebar {
+      background: #fff;
+      border-right: 1px solid #ddd;
+      padding: 15px;
       display: flex;
       flex-direction: column;
     }
-
-    .chat-bubble {
-      max-width: 70%;
-      margin: 10px;
-      padding: 12px;
-      border-radius: 15px;
-      background-color: #6a4fff;
+    .sidebar button {
+      background: #6a4fff;
       color: white;
-      align-self: flex-start;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: auto;
+    }
+    .main {
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+      overflow: hidden;
+    }
+    #chat-box {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      overflow-y: auto;
+    }
+    .bubble {
+      max-width: 70%;
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 16px;
       position: relative;
-      opacity: 0;
-      animation: fadeIn 0.5s forwards;
     }
-
-    .chat-bubble.user {
-      background-color: #ccc;
+    .bubble.user {
+      background: #e0e0e0;
+      margin-left: auto;
       color: #333;
-      align-self: flex-end;
     }
-
+    .bubble.lily {
+      background: #6a4fff;
+      margin-right: auto;
+      color: #fff;
+    }
     .input-area {
       display: flex;
-      padding: 15px;
-      background-color: #fff;
-      border-top: 1px solid #ddd;
+      margin-top: 10px;
     }
-
     .input-area input {
-      flex-grow: 1;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px 0 0 6px;
       font-size: 1em;
-      margin-right: 10px;
     }
-
     .input-area button {
-      background-color: #6a4fff;
+      background: #6a4fff;
       color: white;
-      padding: 12px 15px;
       border: none;
-      border-radius: 8px;
+      padding: 10px 15px;
+      border-radius: 0 6px 6px 0;
       cursor: pointer;
-      font-size: 1.1em;
     }
-
-    .input-area button:hover {
-      background-color: #4e3fbf;
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+      justify-content: center;
     }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+    .tools .tool-btn {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      cursor: pointer;
+      flex: 1 1 120px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
-  <div class="dashboard-container">
-    <!-- Sidebar -->
+  <header>
+    <h1>Lily Dashboard</h1>
+    <button class="settings-btn" onclick="logout()">⚙️</button>
+  </header>
+
+  <div class="dashboard">
     <div class="sidebar">
-      <h2>Lily Dashboard</h2>
-      <div>
-        <a href="#">Dashboard Home</a>
-        <a href="#">Tasks</a>
-        <a href="#">Notes</a>
-        <a href="#">Settings</a>
+      <button onclick="logout()">Logout</button>
+    </div>
+    <div class="main">
+      <div id="chat-box">
+        <div class="bubble lily">Hello! How can I help you today?</div>
       </div>
-      <button class="settings-button" onclick="logout()">Logout</button>
-    </div>
-
-    <!-- Main Chat Area -->
-    <div class="main-chat" id="chat-area">
-      <div class="chat-bubble">Hi there! How can I assist you today?</div>
-      <div class="chat-bubble user">I need some help with my tasks.</div>
-      <div class="chat-bubble">Sure! Let me know what you need help with.</div>
-    </div>
-
-    <!-- Chat Input Area -->
-    <div class="input-area">
-      <input type="text" id="chat-input" placeholder="Type your message..." />
-      <button onclick="sendMessage()">Send</button>
+      <div class="input-area">
+        <input type="text" id="chat-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+      <div class="tools">
+        <div class="tool-btn" onclick="openCalculator()">Calculator</div>
+        <div class="tool-btn" onclick="openConverter()">Unit Converter</div>
+        <div class="tool-btn" onclick="startTimer()">Timer</div>
+        <div class="tool-btn" onclick="webSearch()">Web Search</div>
+        <div class="tool-btn" onclick="defineTerm()">Define/Explain</div>
+      </div>
     </div>
   </div>
 
   <script>
-    // Handle sending messages
-    function sendMessage() {
-      const chatInput = document.getElementById('chat-input');
-      const chatArea = document.getElementById('chat-area');
-      const userMessage = chatInput.value.trim();
-
-      if (userMessage) {
-        const userBubble = document.createElement('div');
-        userBubble.classList.add('chat-bubble', 'user');
-        userBubble.textContent = userMessage;
-        chatArea.appendChild(userBubble);
-
-        // Add reply after a short delay
-        setTimeout(() => {
-          const replyBubble = document.createElement('div');
-          replyBubble.classList.add('chat-bubble');
-          replyBubble.textContent = "I’m here to help! What’s next?";
-          chatArea.appendChild(replyBubble);
-          chatArea.scrollTop = chatArea.scrollHeight; // Auto-scroll to the latest message
-        }, 1000);
-      }
-
-      chatInput.value = ''; // Clear input field
-      chatArea.scrollTop = chatArea.scrollHeight; // Scroll to latest message
+    function logout() {
+      window.location.href = 'index.html';
     }
 
-    // Logout Function
-    function logout() {
-      alert("You have logged out.");
-      window.location.href = "index.html";
+    const chatBox = document.getElementById('chat-box');
+    const chatInput = document.getElementById('chat-input');
+
+    function sendMessage() {
+      const txt = chatInput.value.trim();
+      if (!txt) return;
+      chatBox.innerHTML += `<div class="bubble user">${txt}</div>`;
+      chatInput.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Simple reply logic
+      let reply = "I'm still learning.";
+      const m = txt.toLowerCase();
+      if (/(hi|hello)/.test(m)) reply = "Hello there!";
+      else if (m.includes("time")) reply = `Current time: ${new Date().toLocaleTimeString()}`;
+      else if (m.includes("calculate")) return openCalculator();
+      setTimeout(() => {
+        chatBox.innerHTML += `<div class="bubble lily">${reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 500);
+    }
+
+    function openCalculator() {
+      const expr = prompt("Enter expression (e.g. 2+2):");
+      try {
+        const res = Function(`"use strict";return (${expr})`)();
+        alert(`Result: ${res}`);
+      } catch {
+        alert("Invalid expression.");
+      }
+    }
+
+    function openConverter() {
+      const val = parseFloat(prompt("Value to convert:"));
+      const from = prompt("From unit (kg):"), to = prompt("To unit (lb):");
+      if (from==='kg'&&to==='lb') alert(`${val}kg = ${(val*2.20462).toFixed(2)}lb`);
+      else alert("Conversion not supported yet.");
+    }
+
+    function startTimer() {
+      const sec = parseInt(prompt("Seconds for timer:"),10);
+      if (!sec) return alert("Invalid number.");
+      alert(`Timer set for ${sec}s.`);
+      setTimeout(()=> alert("⏰ Time's up!"), sec*1000);
+    }
+
+    async function webSearch() {
+      const q = encodeURIComponent(prompt("Search query:"));
+      if (!q) return;
+      const res = await fetch(`https://api.duckduckgo.com/?q=${q}&format=json`);
+      const data = await res.json();
+      alert(data.AbstractText || "No instant answer.");
+    }
+
+    function defineTerm() {
+      const t = encodeURIComponent(prompt("Term to define:"));
+      if (!t) return;
+      fetch(`https://api.duckduckgo.com/?q=${t}&format=json`)
+        .then(r=>r.json()).then(d=>{
+          alert(d.Abstract || "No definition found.");
+        });
     }
   </script>
 
 </body>
-</html>
+          </html>
