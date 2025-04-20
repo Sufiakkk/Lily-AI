@@ -1,48 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lily Dashboard</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lily - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Lily Dashboard</h1>
-    <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
-  </header>
+    <header>
+        <h1>Chat with Lily</h1>
+        <button id="logout-button">Log out</button>
+    </header>
 
-  <div class="dashboard">
-    <div class="sidebar">
-      <button onclick="logout()">Logout</button>
-      <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-    </div>
-    <div class="main">
-      <div id="chat-box">
-        <div class="bubble lily">Hello! How can I help you today?</div>
-      </div>
-      <div class="input-area">
-        <input type="text" id="chat-input" placeholder="Type your message..." />
-        <button onclick="sendMessage()">Send</button>
-      </div>
-      <div class="tools">
-        <div class="tool-btn" onclick="openCalculator()">Calculator</div>
-        <div class="tool-btn" onclick="openConverter()">Unit Converter</div>
-        <div class="tool-btn" onclick="startTimer()">Timer</div>
-        <div class="tool-btn" onclick="webSearch()">Web Search</div>
-        <div class="tool-btn" onclick="defineTerm()">Define/Explain</div>
-        <div class="tool-btn" onclick="requestNotification()">Notify</div>
-      </div>
-    </div>
-  </div>
+    <main>
+        <div id="chat-area">
+            <div id="messages"></div>
+            <input type="text" id="user-input" placeholder="Talk to Lily..." />
+        </div>
+    </main>
 
-  <div id="settings-panel" hidden>
-    <h3>Settings</h3>
-    <label><input type="checkbox" id="darkToggle" /> Dark Mode</label>
-    <button onclick="closeSettings()">Close</button>
-  </div>
-
-  <script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
-          </html>
+</html>
