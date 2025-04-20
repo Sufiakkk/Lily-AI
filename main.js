@@ -1,39 +1,43 @@
-const firebaseConfig = {
-    apiKey: "YOUR_GOOGLE_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+const form = document.getElementById("chat-form");
+const input = document.getElementById("chat-input");
+const chatbox = document.getElementById("chatbox");
 
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const menuBtn = document.getElementById("menu-btn");
+const dropdown = document.getElementById("menu-dropdown");
+const logoutBtn = document.getElementById("logout-btn");
 
-document.getElementById('login-button').addEventListener('click', () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then((result) => {
-        window.location.href = 'dashboard.html';
-    }).catch((error) => {
-        console.log(error.message);
-    });
+// Toggle dropdown menu
+menuBtn.addEventListener("click", () => {
+  dropdown.classList.toggle("hidden");
 });
 
-document.getElementById('logout-button').addEventListener('click', () => {
-    auth.signOut().then(() => {
-        window.location.href = 'index.html';
-    });
+// Handle logout
+logoutBtn.addEventListener("click", () => {
+  // TODO: implement real logout logic
+  alert("Logging out...");
+  // e.g., clear tokens and redirect:
+  // localStorage.clear();
+  // window.location.href = "index.html";
 });
 
-document.getElementById('user-input').addEventListener('keypress', async (e) => {
-    if (e.key === 'Enter') {
-        const userInput = e.target.value;
-        const response = await fetch('/getAIResponse', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: userInput })
-        });
-        const result = await response.json();
-        document.getElementById('messages').innerHTML += `<div class="ai-response">${result.response}</div>`;
-    }
+// Append a chat message
+function appendMsg(sender, text) {
+  const bubble = document.createElement("div");
+  bubble.classList.add("chat-bubble", sender === "Lily" ? "bubble-lily" : "bubble-myne");
+  bubble.textContent = text;
+  chatbox.appendChild(bubble);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+// Handle form submit
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  appendMsg("Myne", msg);
+  input.value = "";
+  // Placeholder reply
+  appendMsg("Lily", "Let me think...");
+  // TODO: integrate local LLM + fallback here
 });
