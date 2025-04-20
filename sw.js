@@ -1,18 +1,19 @@
-self.addEventListener("install", e => {
-  e.waitUntil(
-    caches.open("lily-cache").then(cache => {
-      return cache.addAll([
-        "dashboard.html",
-        "style.css",
-        "main.js",
-        "manifest.json"
-      ]);
-    })
-  );
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open('chat-cache').then((cache) => {
+            return cache.addAll([
+                '/index.html',
+                '/style.css',
+                '/main.js'
+            ]);
+        })
+    );
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
-  );
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request).then((cachedResponse) => {
+            return cachedResponse || fetch(event.request);
+        })
+    );
 });
