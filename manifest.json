@@ -1,14 +1,20 @@
 {
-  "name": "Lily Dashboard",
+  "name": "Lily - AI Assistant",
   "short_name": "Lily",
-  "start_url": "dashboard.html",
+  "description": "Charming, friendly, and bright AI Assistant",
+  "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#6a4fff",
-  "theme_color": "#6a4fff",
+  "background_color": "#ffffff",
+  "theme_color": "#5c6bc0",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "images/icon-192x192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
