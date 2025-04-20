@@ -1,100 +1,39 @@
-// Chat logic
-const chatBox = document.getElementById('chat-box');
-const chatInput = document.getElementById('chat-input');
+const firebaseConfig = {
+    apiKey: "YOUR_GOOGLE_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-function logout() {
-  window.location.href = 'index.html';
-}
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-function sendMessage() {
-  const txt = chatInput.value.trim();
-  if (!txt) return;
-  chatBox.innerHTML += `<div class="bubble user">${txt}</div>`;
-  chatInput.value = '';
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  let reply = "I'm still learning.";
-  const m = txt.toLowerCase();
-  if (/(hi|hello)/.test(m)) reply = "Hello there!";
-  else if (m.includes("time")) reply = `Current time: ${new Date().toLocaleTimeString()}`;
-  else if (m.includes("calculate")) return openCalculator();
-
-  setTimeout(() => {
-    chatBox.innerHTML += `<div class="bubble lily">${reply}</div>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }, 500);
-}
-
-// Tools
-function openCalculator() {
-  const expr = prompt("Enter expression (e.g. 2+2):");
-  try {
-    const res = Function(`"use strict";return (${expr})`)();
-    alert(`Result: ${res}`);
-  } catch {
-    alert("Invalid expression.");
-  }
-}
-
-function openConverter() {
-  const val = parseFloat(prompt("Value to convert:"));
-  const from = prompt("From unit (kg):"), to = prompt("To unit (lb):");
-  if (from==='kg'&&to==='lb') alert(`${val}kg = ${(val*2.20462).toFixed(2)}lb`);
-  else alert("Conversion not supported yet.");
-}
-
-function startTimer() {
-  const sec = parseInt(prompt("Seconds for timer:"),10);
-  if (!sec) return alert("Invalid number.");
-  alert(`Timer set for ${sec}s.`);
-  setTimeout(()=> alert("⏰ Time's up!"), sec*1000);
-}
-
-async function webSearch() {
-  const q = encodeURIComponent(prompt("Search query:"));
-  if (!q) return;
-  const res = await fetch(`https://api.duckduckgo.com/?q=${q}&format=json`);
-  const data = await res.json();
-  alert(data.AbstractText || "No instant answer.");
-}
-
-function defineTerm() {
-  const t = encodeURIComponent(prompt("Term to define:"));
-  if (!t) return;
-  fetch(`https://api.duckduckgo.com/?q=${t}&format=json`)
-    .then(r=>r.json()).then(d=>{
-      alert(d.Abstract || "No definition found.");
+document.getElementById('login-button').addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then((result) => {
+        window.location.href = 'dashboard.html';
+    }).catch((error) => {
+        console.log(error.message);
     });
-}
+});
 
-// Settings
-function toggleSettings() {
-  document.getElementById('settings-panel').hidden = false;
-}
-function closeSettings() {
-  document.getElementById('settings-panel').hidden = true;
-}
+document.getElementById('logout-button').addEventListener('click', () => {
+    auth.signOut().then(() => {
+        window.location.href = 'index.html';
+    });
+});
 
-// Dark Mode
-function toggleDarkMode() {
-  document.body.classList.toggle('dark');
-  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-}
-if (localStorage.getItem('theme') === 'dark') {
-  document.body.classList.add('dark');
-}
-
-// Notifications
-function requestNotification() {
-  if (!("Notification" in window)) return alert("Notifications not supported.");
-  Notification.requestPermission().then(p => {
-    if (p === "granted") {
-      new Notification("Lily says hi!");
+document.getElementById('user-input').addEventListener('keypress', async (e) => {
+    if (e.key === 'Enter') {
+        const userInput = e.target.value;
+        const response = await fetch('/getAIResponse', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: userInput })
+        });
+        const result = await response.json();
+        document.getElementById('messages').innerHTML += `<div class="ai-response">${result.response}</div>`;
     }
-  });
-}
-
-// Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+});
