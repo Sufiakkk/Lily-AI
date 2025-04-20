@@ -1,43 +1,22 @@
-const form = document.getElementById("chat-form");
-const input = document.getElementById("chat-input");
-const chatbox = document.getElementById("chatbox");
+// main.js
 
-const menuBtn = document.getElementById("menu-btn");
-const dropdown = document.getElementById("menu-dropdown");
-const logoutBtn = document.getElementById("logout-btn");
+const menuBtn = document.getElementById("menu-button"); const menuPanel = document.getElementById("menu-panel"); const logoutBtn = document.getElementById("logout-button"); const chatContainer = document.getElementById("chat-container"); const chatInput = document.getElementById("chat-input"); const sendButton = document.getElementById("send-button");
 
-// Toggle dropdown menu
-menuBtn.addEventListener("click", () => {
-  dropdown.classList.toggle("hidden");
-});
+// Toggle menu menuBtn.onclick = () => { menuPanel.style.display = menuPanel.style.display === "block" ? "none" : "block"; };
 
-// Handle logout
-logoutBtn.addEventListener("click", () => {
-  // TODO: implement real logout logic
-  alert("Logging out...");
-  // e.g., clear tokens and redirect:
-  // localStorage.clear();
-  // window.location.href = "index.html";
-});
+document.addEventListener("click", (e) => { if (!menuPanel.contains(e.target) && e.target !== menuBtn) { menuPanel.style.display = "none"; } });
 
-// Append a chat message
-function appendMsg(sender, text) {
-  const bubble = document.createElement("div");
-  bubble.classList.add("chat-bubble", sender === "Lily" ? "bubble-lily" : "bubble-myne");
-  bubble.textContent = text;
-  chatbox.appendChild(bubble);
-  chatbox.scrollTop = chatbox.scrollHeight;
-}
+// Logout handler logoutBtn.onclick = () => { window.location.href = "index.html"; };
 
-// Handle form submit
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const msg = input.value.trim();
-  if (!msg) return;
+// Send chat sendButton.onclick = sendMessage; chatInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendMessage(); });
 
-  appendMsg("Myne", msg);
-  input.value = "";
-  // Placeholder reply
-  appendMsg("Lily", "Let me think...");
-  // TODO: integrate local LLM + fallback here
-});
+function sendMessage() { const message = chatInput.value.trim(); if (message === "") return;
+
+addMessage("user", message); chatInput.value = "";
+
+setTimeout(() => { const response = getFakeResponse(message); addMessage("bot", response); }, 600); }
+
+function addMessage(sender, text) { const messageDiv = document.createElement("div"); messageDiv.classList.add("chat-message", sender); messageDiv.textContent = text; chatContainer.appendChild(messageDiv); chatContainer.scrollTop = chatContainer.scrollHeight; }
+
+function getFakeResponse(userInput) { const responses = [ "That's interesting!", "I'm still learning, but I’ll try to help.", "Can you tell me more?", "Let me look that up for you soon.", "I’m Lily, here to help however I can." ]; return responses[Math.floor(Math.random() * responses.length)]; }
+
