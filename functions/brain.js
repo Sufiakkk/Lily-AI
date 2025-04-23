@@ -1,46 +1,41 @@
-// Netlify Function: brain.js
-// Handles Lily AI requests using OpenRouter securely
+/**
+ * functions/brain.js
+ *
+ * Lily Brain v10: basic offline reply engine with pattern matching,
+ * templates, and fallback responses.
+ */
 
-const fetch = require("node-fetch");
+// Example rule set: array of {pattern: RegExp, replies: [String]}
+const rules = [
+  { pattern: /hello|hi|hey/i, replies: [
+      "Hello there! 🌸 How can I assist you today?",
+      "Hi! What would you like to chat about?",
+    ]
+  },
+  { pattern: /how are you\??/i, replies: [
+      "I’m just bits and bytes, but I’m feeling fantastic!",
+      "All systems go! How can I help?",
+    ]
+  },
+  // Add 100+ more patterns here...
+];
 
-exports.handler = async function(event) {
-  try {
-    const body = JSON.parse(event.body);
-    const message = body.message || "Hello";
-
-    const OPENROUTER_KEY = process.env.OPENROUTER_KEY_2;
-    const endpoint = "https://openrouter.ai/api/v1/chat/completions";
-
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENROUTER_KEY}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://your-site-name.netlify.app" // Optional: change to your domain
-      },
-      body: JSON.stringify({
-        model: "openrouter/gpt-3.5-turbo",
-        messages: [
-          {
-            role: "system",
-            content: "You are Lily, a calm, kind, and creative AI assistant for a student named Abdullah. Always be helpful, sweet, and clever."
-          },
-          { role: "user", content: message }
-        ]
-      })
-    });
-
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || "I'm not sure how to answer that right now.";
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ reply })
-    };
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Lily brain failed to reply", details: err.message })
-    };
+/**
+ * getLilyReply - find a matching reply or fallback.
+ * @param {string} text - user input
+ * @returns {string} - Lily's reply
+ */
+function getLilyReply(text) {
+  for (const rule of rules) {
+    if (rule.pattern.test(text)) {
+      // Randomly pick one of the replies
+      const idx = Math.floor(Math.random() * rule.replies.length);
+      return rule.replies[idx];
+    }
   }
-};
+  // Fallback generator
+  return `Hmm, I’m still learning about "${text}". Can you try asking differently?`;
+}
+
+// Expose to main.js
+window.getLilyReply = getLilyReply;
