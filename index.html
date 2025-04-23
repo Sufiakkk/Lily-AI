@@ -1,200 +1,196 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Lily</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lily | Your Private AI Assistant</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+    /* Base and mobile-first styles */
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: #f7f5ff;
-      color: #333;
+      padding: 1rem;
+      background: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      min-height: 100vh;
+      line-height: 1.5;
     }
-    .container {
-      background: white;
-      padding: 40px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 700px;
-      width: 100%;
-      text-align: center;
-      position: relative;
+    .logo {
+      width: 100px;
+      max-width: 30vw;
+      margin-bottom: 1rem;
     }
-    header h1 {
-      font-size: 2.8em;
-      margin: 0;
-      animation: fadeSlideIn 1s ease-out;
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
     }
-    header p {
-      font-size: 1.1em;
-      margin: 20px 0;
-      animation: fadeSlideIn 1.5s ease-out;
+    p.intro {
+      max-width: 90%;
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 1.5rem;
     }
-    section.intro {
-      margin-top: 30px;
+    .cta-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      margin-bottom: 2rem;
+      background: #6a0dad;
+      border-radius: 0.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s;
     }
-    section.roadmap {
-      margin-top: 40px;
-      opacity: 0;
-      animation: slideFadeUp 1s ease-out 2s forwards;
+    .cta-btn:hover {
+      background: #8133cc;
     }
-    .roadmap ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    /* Menu icon */
+    .menu-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 20px;
+      cursor: pointer;
+      z-index: 100;
     }
-    .roadmap li {
+    .menu-icon span {
+      display: block;
+      height: 3px;
       background: #fff;
-      margin: 15px 0;
-      padding: 15px 20px;
-      border-left: 6px solid #6a4fff;
-      border-radius: 5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 2px;
+      transition: background 0.2s;
     }
-    footer {
-      font-size: 0.9em;
-      color: #666;
-      margin-top: 40px;
+    .menu-icon:hover span {
+      background: #e0e0e0;
     }
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideFadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    /* Dev Icon */
-    #dev-icon {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: white;
-      color: #6a4fff;
-      font-size: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      cursor: pointer;
-      z-index: 1000;
-      transition: transform 0.2s ease;
-    }
-    #dev-icon:hover {
-      transform: scale(1.2);
-    }
-    /* Dev Login */
-    #dev-login {
+    /* Dropdown */
+    .dropdown {
+      position: absolute;
+      top: 3rem;
+      right: 1rem;
+      background: #1f1f1f;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
       display: none;
-      position: fixed;
-      top: 70px;
-      right: 20px;
-      background: white;
-      border: 1px solid #ccc;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1001;
+      flex-direction: column;
+      width: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
-    #dev-login form {
-      autocomplete: off;
+    .dropdown.show {
+      display: flex;
     }
-    #dev-login input {
-      width: 220px;
-      padding: 8px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-    }
-    #dev-login button {
-      background: #6a4fff;
+    .dropdown a {
       color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 1em;
-      cursor: pointer;
+      text-decoration: none;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      border-radius: 0.25rem;
+      transition: background 0.2s;
+    }
+    .dropdown a:hover {
+      background: #333;
+    }
+    /* Sections styling */
+    .section {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+    .section h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    .section ul {
+      list-style: disc inside;
+      color: #ccc;
+      margin-left: 1rem;
+    }
+    .section p {
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+    .section a code {
+      background: rgba(255,255,255,0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.2rem;
+      color: #fff;
     }
   </style>
 </head>
 <body>
-
-  <!-- Developer Icon -->
-  <div id="dev-icon" title="Developer Login">&#8942;</div>
-
-  <!-- Hidden Dev Login Form -->
-  <div id="dev-login">
-    <form id="dev-login-form">
-      <input type="text" name="username" placeholder="Username" autocomplete="off" required />
-      <input type="password" name="password" placeholder="Password" autocomplete="new-password" required />
-      <button type="submit">Login</button>
-    </form>
+  <!-- Menu icon for Developer Login -->
+  <div class="menu-icon" onclick="toggleMenu()" aria-label="Open menu">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
-
-  <div class="container">
-    <header>
-      <h1>Meet Lily</h1>
-      <p>Your calm, smart, and helpful AI assistant—designed to simplify your day.</p>
-    </header>
-
-    <section class="intro">
-      <h2>What is Lily?</h2>
-      <p>Lily is an AI‑powered assistant that learns your habits, manages tasks, and provides smart suggestions—all through a simple, intuitive interface.</p>
-      <p>Chat, set reminders, control your device, and stay organized with personalized features built just for you.</p>
-    </section>
-
-    <section class="roadmap">
-      <h2>Our Roadmap</h2>
-      <ul>
-        <li><strong>Stage 1:</strong> Task & Voice Basics</li>
-        <li><strong>Stage 2:</strong> Mobile Controls & Wellness Tips</li>
-        <li><strong>Stage 3:</strong> Home Automation & Cloud Sync</li>
-        <li><strong>Stage 4:</strong> Full AI Personalization</li>
-      </ul>
-    </section>
-
-    <footer>
-      “Hey Lily, what can you do?” — “I’ll help you stay organized, focused, and in control.”
-    </footer>
-  </div>
-
-  <script>
-    const devIcon = document.getElementById("dev-icon");
-    const devLogin = document.getElementById("dev-login");
-
-    devIcon.onclick = () => {
-      devLogin.style.display = devLogin.style.display === "block" ? "none" : "block";
-    };
-
-    document.addEventListener("click", e => {
-      if (!devLogin.contains(e.target) && e.target !== devIcon) {
-        devLogin.style.display = "none";
+  <!-- Dropdown Menu -->
+  <div class="dropdown" id="menuDropdown">
+    <a href="login.html">Developer Login</a>
+  </div>  <!-- Logo and Intro -->  <img src="lilylogo.png" alt="Lily Logo" class="logo">
+  <h1>Welcome to Lily</h1>
+  <p class="intro">
+    Lily is your personalized, private AI assistant—built just for you. Designed for full customization and privacy-first interaction, Lily helps you manage tasks, access personal data with permission, and assist online or offline.
+  </p>
+  <a href="dashboard.html" class="cta-btn">Get Started</a>  <!-- Core Features -->  <section class="section" id="features">
+    <h2>Core Features</h2>
+    <ul>
+      <li><strong>Fully Customizable:</strong> Adapt Lily to your preferences and needs, from appearance to behavior.</li>
+      <li><strong>Access &amp; Edit Your Data:</strong> With your permission, view and update personal files, emails, contacts, and more while keeping data local and private.</li>
+      <li><strong>No Usage Limits:</strong> Unlimited chats, tasks, and interactions without throttling or extra charges.</li>
+      <li><strong>Screen Interaction:</strong> Observe and assist on-screen actions like typing messages or updating tasks directly.</li>
+      <li><strong>Memory &amp; Adaptation:</strong> Learns from past interactions to better match your style and anticipate your needs over time.</li>
+      <li><strong>Autonomous Task Handling:</strong> Automate and manage your workflows without juggling multiple external tools.</li>
+      <li><strong>Online &amp; Offline Support:</strong> Works seamlessly with the internet and provides offline essentials when you’re disconnected.</li>
+    </ul>
+  </section>  <!-- Target Audience -->  <section class="section" id="audience">
+    <h2>Target Audience</h2>
+    <p>
+      Lily is perfect for anyone seeking a personal assistant that adapts to their lifestyle—students, professionals, creatives, or anyone who values privacy and customization.
+    </p>
+  </section>  <!-- Privacy & Security -->  <section class="section" id="privacy">
+    <h2>Privacy &amp; Security</h2>
+    <p>
+      Lily is designed with a strict privacy policy: your data stays local and never sold or used outside your region. All interactions are encrypted and stored securely on your device or chosen cloud.
+    </p>
+  </section>  <!-- Access & Availability -->  <section class="section" id="availability">
+    <h2>Access &amp; Availability</h2>
+    <ul>
+      <li><strong>Web Version:</strong> Full capabilities online with PWA support; caches crucial data for offline fallback.</li>
+      <li><strong>App Version:</strong> Native offline-first mode with extended features like file uploads and persistent memory.</li>
+      <li><strong>Cross-Platform:</strong> Connects both versions for a seamless experience when internet is available.</li>
+    </ul>
+  </section>  <!-- Developers Section -->  <section class="section" id="developers">
+    <h2>For Developers</h2>
+    <p>
+      Check out Lily’s source code on GitHub:
+      <a href="https://github.com/Sufiakkk/Lily-AI" target="_blank"><code>https://github.com/Sufiakkk/Lily-AI</code></a>
+    </p>
+    <p>
+      Clone the repo and start contributing or customizing:
+      <code>git clone https://github.com/Sufiakkk/Lily-AI.git</code>
+    </p>
+  </section>  <script>
+    // Toggle dropdown visibility
+    function toggleMenu() {
+      const menu = document.getElementById('menuDropdown');
+      menu.classList.toggle('show');
+    }
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('menuDropdown');
+      const icon = document.querySelector('.menu-icon');
+      if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('show');
       }
     });
-
-    document.getElementById("dev-login-form").onsubmit = e => {
-      e.preventDefault();
-      const u = e.target.username.value.trim();
-      const p = e.target.password.value;
-      if (u === "Abdullah" && p === "1234@abdullah") {
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Incorrect developer credentials.");
-      }
-    };
-  </script>
-</body>
-        </html>
+  </script></body>
+  </html>
