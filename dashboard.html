@@ -1,21 +1,34 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lily Dashboard</title>
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
+  <title>Lily Chat</title>
 </head>
-<body>
-  <div class="dashboard-header">
-    <img src="lily-logo.png" alt="Lily Logo" class="logo">
-    <div class="menu-button" id="menu-toggle">&#8942;</div>
-    <div class="menu-panel" id="menu-panel">
-      <button id="logout-button">Logout</button>
+<body class="dark">
+  <header class="top-bar">
+    <img src="lilylogo.png" alt="Lily Logo" class="logo" />
+    <div class="menu">
+      <button id="menuBtn" aria-label="Menu">⋮</button>
+      <ul id="menuList" class="dropdown hidden">
+        <li id="toggleTheme">Toggle Theme</li>
+        <li id="logout">Logout</li>
+      </ul>
     </div>
-  </div>  <div class="chat-container" id="chat-container">
-    <div class="chat-message bot">Hello! I'm Lily. How can I assist you today?</div>
-  </div>  <div class="input-bar">
-    <input type="text" id="chat-input" placeholder="Type your message...">
-    <button id="send-button">Send</button>
-  </div>  <script src="main.js"></script></body>
+  </header>
+
+  <main id="chatContainer">
+    <!-- Messages will append here -->
+  </main>
+
+  <footer class="input-area">
+    <input id="chatInput" type="text" placeholder="Type your message..." autocomplete="off" />
+    <button id="sendBtn" aria-label="Send">➤</button>
+  </footer>
+
+  <script src="functions/brain.js"></script>
+  <script src="main.js"></script>
+</body>
 </html>
