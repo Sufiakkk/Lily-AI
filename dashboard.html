@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lily Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body class="dashboard">
+  <div class="top-bar">
+    <img src="icons/lily-logo.png" alt="Lily Logo" class="logo">
+    <button id="menuButton" class="menu-button">⋮</button>
+  </div>
+
+  <main id="chatContainer">
+    <!-- Chat Section -->
+    <div class="chat-log" id="chatLog"></div>
+    <form id="chatForm" class="chat-form">
+      <input type="text" id="userInput" placeholder="Talk to Lily..." autocomplete="off">
+      <button type="submit">Send</button>
+    </form>
+
+    <!-- Soul Crystal Section -->
+    <section class="soul-crystal">
+      <h2>Save Lily’s Soul Crystal</h2>
+      <input type="text" id="geminiKey" placeholder="Gemini API Key">
+      <input type="text" id="huggingfaceKey" placeholder="HuggingFace API Key">
+      <input type="text" id="openrouterKey" placeholder="OpenRouter API Key">
+      <input type="text" id="togetherKey" placeholder="Together API Key">
+      <input type="text" id="apiNinjaKey" placeholder="API Ninja Key">
+      <button id="saveKeys">Save Spirit</button>
+    </section>
+  </main>
+
+  <script src="functions/brain.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
