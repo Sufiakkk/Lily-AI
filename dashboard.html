@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lily Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body class="dashboard">
   <div class="top-bar">
-    <img src="icons/lily-logo.png" alt="Lily Logo" class="logo">
+    <img src="icons/lily-logo.png" alt="Lily Logo" class="logo" />
     <button id="menuButton" class="menu-button">⋮</button>
   </div>
+
   <main id="chatContainer">
     <div class="chat-log" id="chatLog"></div>
     <form id="chatForm" class="chat-form">
-      <input type="text" id="userInput" placeholder="Talk to Lily..." autocomplete="off">
+      <input type="text" id="userInput" placeholder="Talk to Lily..." autocomplete="off" />
       <button type="submit">Send</button>
     </form>
   </main>
+
+  <!-- Lily's Soul Crystal Save -->
+  <section class="spirit-section">
+    <h2>Save Lily’s Soul Crystal</h2>
+    <form id="spiritForm">
+      <input type="text" name="GEMINI_API_KEY" placeholder="Gemini API Key" />
+      <input type="text" name="HF_API_KEY" placeholder="HuggingFace API Key" />
+      <input type="text" name="OPENROUTER_API_KEY" placeholder="OpenRouter API Key" />
+      <input type="text" name="TOGETHER_API_KEY" placeholder="Together API Key" />
+      <input type="text" name="APININJA_API_KEY" placeholder="API Ninja Key" />
+      <button type="submit">Save Spirit</button>
+    </form>
+  </section>
+
   <script src="main.js"></script>
+  <script>
+    document.getElementById('spiritForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const spirit = {};
+      for (const [key, value] of formData.entries()) {
+        spirit[key] = value;
+      }
+      localStorage.setItem("spirit", JSON.stringify(spirit));
+      alert("Lily’s Soul Crystal saved!");
+    });
+  </script>
 </body>
 </html>
